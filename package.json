@@ -1,0 +1,29 @@
+{
+  "name": "adynclambdatester",
+  "version": "0.0.1",
+  "description": "Test Generation for Higher-Order, Asynchronous Functions in Dynamic Languages",
+  "main": "testGeneration.js",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "esprima": "^4.0.0",
+    "estraverse": "^4.2.0",
+    "seedrandom": "^2.4.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sola-da/LambdaTester.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sola-da/LambdaTester/issues"
+  },
+  "homepage": "https://github.com/sola-da/LambdaTester#readme"
+}
