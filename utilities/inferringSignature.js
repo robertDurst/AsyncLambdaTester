@@ -9,7 +9,7 @@ const decisions = new Decisions();
 // testing budget
 let maxTests = 100;
 
-// calback function to test
+// callback function to test
 const f = 'var f = function () { console.log("I am executed");}';
 
 // selects a random element from a given array
@@ -75,7 +75,7 @@ function getValue(setupCode) {
 // setupCode: the code from the specified setup code from the cli invocation
 // apiName: method name under test
 // baseObj: receiver of the method call
-// position:
+// position: number of argument positions
 function constructString(setupCode, apiName, baseObj, position) {
   let str = `${setupCode}\n`;
 
