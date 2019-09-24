@@ -149,7 +149,7 @@ function findPositions(setupCode, M) {
     const m = M[i];
 
     // empty set of callbacks
-    const p = { name: m, positions: [], isAsync: false };
+    const p = { name: m, positions: [] };
     // assume, by default 5 arguments
     const counts = [1, 1, 1, 1, 1];
 
@@ -175,11 +175,8 @@ function findPositions(setupCode, M) {
         // if feedback has non-empty log then
         if (feedback === 'async' || feedback === 'sync') {
           // Add poscb to C[m]
-          if (p.positions.indexOf(position) === -1) {
-            p.positions.push(position);
-          }
-          if (feedback === 'async') {
-            p.isAsync = true;
+          if (p.positions.indexOf(`${position}: ${feedback}`) === -1) {
+            p.positions.push(`${position}: ${feedback}`);
           }
         }
         counts[position]++;
