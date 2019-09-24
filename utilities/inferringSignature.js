@@ -41,7 +41,7 @@ function getDefinedVal(setupCode) {
       //  * type is VariableDeclarator
       //  * value is initialized
       //  * it is not assigned a require (import) or it is not assigned a callee at all
-      if (node.type === 'VariableDeclarator' && node.init && (!node.init.callee || node.init.callee.name !== 'require')) {
+      if (node.type === 'VariableDeclarator' && node.init) {
         pool.push(node.id.name);
       }
     },
@@ -109,6 +109,7 @@ function constructString(setupCode, apiName, baseObj, position) {
   str += ')';
   str += '}catch(e){\n';
   str += '};\n';
+  str += 'console.log("hello world");';
 
   return str;
 }
@@ -119,9 +120,20 @@ function constructString(setupCode, apiName, baseObj, position) {
 // with feedback that the callback was executed
 function execute(str) {
   try {
+    let feedback = 'none';
     fs.writeFileSync('./testPosition.js', str);
     const output = execSync('node testPosition.js');
-    const feedback = output.indexOf('I am executed') > -1;
+    const callbackFeedback = output.indexOf('I am executed');
+    const asynchronousCheck = output.indexOf('hello world');
+
+    // due to the nature of the event loop, asynchronous callbacks will be
+    // executed after the dummy console.log invocation
+    if (callbackFeedback !== -1 && (asynchronousCheck < callbackFeedback)) {
+      feedback = 'async';
+    } else if (callbackFeedback !== -1) {
+      feedback = 'sync';
+    }
+
     return feedback;
   } catch (e) {
     return false;
@@ -137,7 +149,7 @@ function findPositions(setupCode, M) {
     const m = M[i];
 
     // empty set of callbacks
-    const p = { name: m, positions: [] };
+    const p = { name: m, positions: [], isAsync: false };
     // assume, by default 5 arguments
     const counts = [1, 1, 1, 1, 1];
 
@@ -161,10 +173,13 @@ function findPositions(setupCode, M) {
         // feedback ← execute(test)
         const feedback = execute(testStr);
         // if feedback has non-empty log then
-        if (feedback === true) {
+        if (feedback === 'async' || feedback === 'sync') {
           // Add poscb to C[m]
           if (p.positions.indexOf(position) === -1) {
             p.positions.push(position);
+          }
+          if (feedback === 'async') {
+            p.isAsync = true;
           }
         }
         counts[position]++;

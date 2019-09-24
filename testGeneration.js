@@ -12,9 +12,8 @@ const genTests = () => {
 
   const setupCode = fs.readFileSync(setup).toString();
   const names = fnNames.split(' ');
-  let positions = [];
   console.log('Discovery phase...');
-  positions = findPositions(setupCode, names);
+  const positions = findPositions(setupCode, names);
   console.log(positions);
 };
 
