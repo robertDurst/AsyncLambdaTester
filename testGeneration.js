@@ -1,6 +1,14 @@
 const fs = require('fs');
 const { findPositions } = require('./utilities/inferringSignature.js');
 
+const discoveryPhase = (fnNames, setup) => {
+  const setupCode = fs.readFileSync(setup).toString();
+  const names = fnNames.split(' ');
+  console.log('Discovery phase...');
+  const positions = findPositions(setupCode, names);
+  console.log(positions);
+};
+
 const genTests = () => {
   const fnNames = process.argv[2];
   const setup = process.argv[3];
@@ -10,11 +18,7 @@ const genTests = () => {
     process.exit(1);
   }
 
-  const setupCode = fs.readFileSync(setup).toString();
-  const names = fnNames.split(' ');
-  console.log('Discovery phase...');
-  const positions = findPositions(setupCode, names);
-  console.log(positions);
+  discoveryPhase(fnNames, setup);
 };
 
 genTests();

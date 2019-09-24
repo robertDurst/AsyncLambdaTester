@@ -9,6 +9,7 @@
   "dependencies": {
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
+    "progress": "^2.0.3",
     "seedrandom": "^2.4.3"
   },
   "devDependencies": {

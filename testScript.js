@@ -1,8 +1,8 @@
-const fs = require('fs');
 const { execSync } = require('child_process');
+const ProgressBar = require('progress');
 
 // https://stackoverflow.com/questions/5842654/how-to-get-an-objects-methods#5842695
-function getMethods(obj) {
+const getMethods = (obj) => {
   const res = [];
   for (const m in obj) {
     if (typeof obj[m] === 'function') {
@@ -10,9 +10,9 @@ function getMethods(obj) {
     }
   }
   return res;
-}
+};
 
-function checkSync(m, setup) {
+const checkSync = (m, setup) => {
   try {
     const output = execSync(`node testGeneration.js ${m} ${setup}`);
     const noCallbacks = output.indexOf('position: []') > -1;
@@ -27,15 +27,27 @@ function checkSync(m, setup) {
   } catch (e) {
     return false;
   }
-}
+};
 
-const ms = getMethods(fs);
-const c = [];
-for (let i = 0; i < ms.length; i++) {
-  const classification = checkSync(ms[i], './setupCode/setupFs.js');
-  console.log(`${ms[i]}: ${classification}`);
-  c.push({
-    name: ms[i],
-    classification,
+const getResultsForModule = (moduleName, setup) => {
+  const moduleObj = require(moduleName);
+  const ms = getMethods(moduleObj);
+  const c = [];
+  const bar = new ProgressBar(`discovering callback positions for module: ${moduleName} [:bar] `, {
+    complete: '=',
+    incomplete: ' ',
+    width: 20,
+    total: ms.length,
   });
-}
+
+  for (let i = 0; i < ms.length; i++) {
+    const classification = checkSync(ms[i], setup);
+    c.push({
+      name: ms[i],
+      classification,
+    });
+    bar.tick();
+  }
+
+  return c;
+};
