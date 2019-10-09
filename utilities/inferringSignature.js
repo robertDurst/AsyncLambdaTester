@@ -3,6 +3,7 @@ const esprima = require('esprima');
 const estraverse = require('estraverse');
 const { execSync } = require('child_process');
 const { Decisions } = require('./randomGenerator.js');
+const { getDefinedVal } = require('./testUtilities');
 
 const decisions = new Decisions();
 
@@ -27,26 +28,6 @@ function getPositions(counts) {
   }
 
   return min.index;
-}
-
-// given some setupCode, traverse its ast, capturing all
-// variable declarations as possible "defined values", returning
-// these variables as a "pool"
-function getDefinedVal(setupCode) {
-  const pool = [];
-  const ast = esprima.parse(setupCode);
-  estraverse.traverse(ast, {
-    enter(node, parent) {
-      // node's:
-      //  * type is VariableDeclarator
-      //  * value is initialized
-      //  * it is not assigned a require (import) or it is not assigned a callee at all
-      if (node.type === 'VariableDeclarator' && node.init) {
-        pool.push(node.id.name);
-      }
-    },
-  });
-  return pool;
 }
 
 function getRandomVal(fnName) {

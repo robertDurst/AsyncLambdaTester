@@ -7,10 +7,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "escodegen": "^1.12.0",
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
+    "fs-extra": "^8.1.0",
+    "js-combinatorics": "^0.5.4",
     "progress": "^2.0.3",
-    "seedrandom": "^2.4.3"
+    "quick_check": "^0.7.0",
+    "seedrandom": "^2.4.3",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "eslint": "^6.3.0",

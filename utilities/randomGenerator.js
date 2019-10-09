@@ -152,9 +152,12 @@ Decisions.prototype = {
 
     return args;
   },
+
+  // for some reason, this may be passed non-numeric types, thus, we correctly coerce
+  // these values to numbers 🤦
   pickRandomNbOfArgs(min) {
     const max = 3;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - Number(min) + 1)) + Number(min);
   },
   pickRandomType() {
     return this.constantTypes[Math.floor(Math.random() * this.constantTypes.length)];
