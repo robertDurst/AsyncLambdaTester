@@ -4,7 +4,8 @@ const { execSync } = require('child_process');
 
 // extendPool takes in a pool and a collection of decisions, or
 // possible types, pick a random constant for the given type if
-// the type is null, undefined, or boolean
+// the type is null, undefined, or boolean and extends the pool
+// array
 const extendPool = (pool, decisions) => {
   for (let i = 0; i < decisions.constantTypes.length; i++) {
     const type = decisions.constantTypes[i];

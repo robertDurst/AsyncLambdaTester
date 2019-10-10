@@ -8,12 +8,11 @@ const callbackProvider = require('../callbackMining/callbackProvider');
 const { pickRandomEl } = require('./testUtilities');
 const { typeOf } = require('./dirUtility');
 
-
 // processFn replaces left brackets with a call to push arguments to callback arguments
 const processFn = (str) => str.replace('{', '{\n callbackArguments.push(arguments) \n');
 
-// generateReturnVal takes in a collection of arguments, put a binary operator between,
-// unless it is a single argument, then put a unary operator
+// generateReturnVal takes in a collection of arguments, puts a binary operator between,
+// unless it is a single argument, then puts a unary operator
 function generateReturnVal(args) {
   const uoperations = ['++', '--'];
   const boperations = ['+', '-', '*', '/'];
@@ -162,7 +161,7 @@ function generateFn(type, decision, fnPool, paths, fnName, start, nbArgs, j, pos
       return fnStr;
     }
     default:
-      throw new Error('Unexpected function type.');
+      throw new Error('Unexpected function generation type.');
   }
 }
 

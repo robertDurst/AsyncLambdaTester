@@ -1,6 +1,4 @@
 const fs = require('fs');
-const esprima = require('esprima');
-const estraverse = require('estraverse');
 const { execSync } = require('child_process');
 const { Decisions } = require('./randomGenerator.js');
 const { allPossibleInputs } = require('./allInputGenerator');

@@ -1,4 +1,7 @@
-
+/**
+ * This is the base file for all test generation, with the highest level methods
+ * discoveryPhase and testGenerationPhase defined.
+ */
 const fs = require('fs');
 const { execSync } = require('child_process');
 const fsextra = require('fs-extra');
@@ -195,9 +198,9 @@ const genTests = () => {
   const names = fnNames.split(' ');
   const setupValues = getDefinedVal(setupCode);
   const decisions = new Decisions();
-  // fs.mkdirSync(`./${testFolder}`);
+  fs.mkdirSync(`./${testFolder}`);
   if (dynAnalysis === 1) {
-    // fs.mkdirSync(`./generated_${testFolder}`);
+    fs.mkdirSync(`./generated_${testFolder}`);
   }
 
   // first infer/discover callback positions

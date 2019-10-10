@@ -34,7 +34,7 @@ class AppendAPICallTask {
 
       // first case, if at callback position, push a callback
       // HAD TO MAKE THIS == !!!!!!!!!!!!!
-      if (argIdx - start == callbackPosition) {
+      if (argIdx - start === Number(callbackPosition)) {
         const position = argIdx;
         // here I fetch functions
         const f = generateFn(typesOfCallbacks, decisions, fnPool, afterCallbackPaths, fnName, start + 1, nbOfArgs, nbOfCall, position);

@@ -1,10 +1,6 @@
 const _ = require('underscore');
 const { typeOf } = require('./dirUtility');
 
-// simply defines a new variable with the given name by appending the
-// var keyword before it
-const freshVar = (name) => `var ${name}`;
-
 // getLog defines a method in string form that is to be called by an
 // eval or execute call
 const getLog = (fileName, base, result, baseArr, resultArr) => {
@@ -111,6 +107,5 @@ class Test {
 
 module.exports = {
   Test,
-  freshVar,
   getLog,
 };
