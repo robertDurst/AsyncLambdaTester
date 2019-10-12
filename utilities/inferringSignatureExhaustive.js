@@ -1,3 +1,12 @@
+/**
+ * This strategy employs an exhaustive approach to inferring the signature
+ * of a method, attempting all possible combinations of typed arguments. It
+ * is 15x slower than the approach in inferringSignature.js however, it always
+ * finds the callbacks (at least to the 5th argument position... we max at 5).
+ *
+ * See inferingSignature for a description of how async classification works.
+ */
+
 const fs = require('fs');
 const { execSync } = require('child_process');
 const { Decisions } = require('./randomGenerator.js');

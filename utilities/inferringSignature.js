@@ -1,3 +1,28 @@
+/**
+ * InferringSignature randomly tries various combinations of inputs along with
+ * the function f (as the final argument) in attempt to discover at what positions,
+ * if any, a method expects a callback as an input. Furthermore, we have extended
+ * this original algorithm, as defined in LambdaTester, to also classify positions
+ * as expecting synchronous or asynchronous callbacks.
+ *
+ * Asynchronous classification: the kye intuition here is to realize that asynchronous
+ * callbacks are always thrown into the event loop. This means that any code
+ * immediately following the deferred asynchronous call will be invoked first (in fact
+ * all code on the stack will be executed before the asynchronous callback is invoked).
+ * As an example consider the following code snippet:
+ *
+ *    setTimeout(() => console.log('A'), 0);
+ *    console.log('B');
+ *
+ * While not intuitive, B will actually be logged before A since setTimeout's method is
+ * thrown on the event loop at 0... not executed at 0.
+ *
+ * Based on the above realization, we construct code snippets to test the ordering of the
+ * execution, more specifically the logging, of two methods to determine whether or not
+ * a callback is executed synchronously or asynchronously. The first is the same method, f,
+ * from LambdaTester. The next is a console.log("hello world") statement added after the
+ * method under investigation is invoked. If "hello world" is first, the method is asynchronous.
+ */
 const fs = require('fs');
 const { execSync } = require('child_process');
 const { Decisions } = require('./randomGenerator.js');
