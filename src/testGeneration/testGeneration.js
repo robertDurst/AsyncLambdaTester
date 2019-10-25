@@ -198,29 +198,29 @@ const genTests = () => {
   const names = fnNames.split(' ');
   const setupValues = getDefinedVal(setupCode);
   const decisions = new Decisions();
-  fs.mkdirSync(`./${testFolder}`);
+  // fs.mkdirSync(`./${testFolder}`);
   if (dynAnalysis === 1) {
     fs.mkdirSync(`./generated_${testFolder}`);
   }
 
   // first infer/discover callback positions
   const positions = discoveryPhase(names, setupCode);
-  positions.forEach((position) => { position.positions = position.positions.map((x) => x.split(':')[0]); });
+  // positions.forEach((position) => { position.positions = position.positions.map((x) => x.split(':')[0]); });
   console.log(positions);
 
-  // then generate tests
-  testGenerationPhase(
-    nbOfTests,
-    testFolder,
-    positionInference,
-    setupValues,
-    names,
-    decisions,
-    dynAnalysis,
-    typesOfCallbacks,
-    positions,
-    setupCode,
-  );
+  // // then generate tests
+  // testGenerationPhase(
+  //   nbOfTests,
+  //   testFolder,
+  //   positionInference,
+  //   setupValues,
+  //   names,
+  //   decisions,
+  //   dynAnalysis,
+  //   typesOfCallbacks,
+  //   positions,
+  //   setupCode,
+  // );
 };
 
 genTests();
