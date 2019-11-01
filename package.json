@@ -4,7 +4,11 @@
   "description": "Test Generation for Higher-Order, Asynchronous Functions in Dynamic Languages",
   "main": "testGeneration.js",
   "scripts": {
-    "lint": "eslint"
+    "clean": "rm -rf ./src/asyncTestGenerationPhase/*.js ./test* ./src/asyncDiscoveryPhase/*.js ./reduceTests ./src/generateTests.js",
+    "compile": "tsc ./src/asyncTestGenerationPhase/*.ts ./src/asyncDiscoveryPhase/*.ts ./src/generateTests.ts",
+    "exec": "node ./src/generateTests.js 'readFile' 10 ./setupCode/setupFs.js 0 0 reduceTests",
+    "lint": "eslint",
+    "testgen": "npm run clean && npm run compile && npm run exec"
   },
   "dependencies": {
     "@types/lodash": "^4.14.144",
@@ -13,10 +17,10 @@
     "escodegen": "^1.12.0",
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
+    "fast-check": "^1.18.1",
     "fs-extra": "^8.1.0",
     "js-combinatorics": "^0.5.4",
     "progress": "^2.0.3",
-    "quick_check": "^0.7.0",
     "seedrandom": "^2.4.3",
     "typescript": "^3.6.4",
     "underscore": "^1.9.1"
