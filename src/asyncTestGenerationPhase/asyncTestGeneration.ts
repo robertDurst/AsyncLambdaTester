@@ -14,7 +14,7 @@ import { Sequence } from './Sequence';
 import { Test } from './Test';
 
 const selectSequence = (sequenceList: Sequence[]): Sequence => {
-    return pickRandomEl(sequenceList);
+    return pickRandomEl(sequenceList).clone();
 };
 
 const selectMethod = (methodNamesList: string[]): string => {
@@ -81,7 +81,7 @@ const executeAndGetFeedback = (testFileName: string): Feedback => {
     try {
         execSync(`timeout 5 node ${testFileName}`).toString();
     } catch (e) {
-        feedback.error = e.message;
+        feedback.setError(e.message);
     }
 
     return feedback;
@@ -170,7 +170,7 @@ export const testGenerationPhase = (
         //  a. non-terminating (novel for asynchronous code)
         //  b. crashing (same as LambdaTester)
         // TODO: if it is not extensible, what should I do?
-        if (feedback.error === null) {
+        if (feedback.isExtensible()) {
             workList.push(currentSequence);
         }
 

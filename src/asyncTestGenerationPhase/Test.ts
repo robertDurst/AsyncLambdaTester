@@ -26,7 +26,7 @@ export class Test {
         // --------- generate all the constant vars in the constant pool --------
         for (const constantVar of constantPool.getConstantVarNamesArray()) {
             // constant is the actual value (or the constant) for constantVar (constant's name)
-            const constant = constantPool[constantVar];
+            const constant = constantPool.getPoolValueByKey(constantVar);
 
             // turns a constant into a string
             let constantString = typeof constant === 'string' && (setupValues.indexOf(constant) > -1
