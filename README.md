@@ -6,6 +6,7 @@ This is a fork of [LambdaTester](https://github.com/sola-da/LambdaTester). See t
 ## Requirements
 
 - [Node.js](https://nodejs.org/en/) (>v6)
+- [TypeScript](https://www.typescriptlang.org/) (>3.6)
 - Install required npm modules with `npm install` or `yarn` if you're hip and cool 😎
 
 ## Overview
@@ -16,12 +17,13 @@ Directories in this repository:
 3. **callbackMining** - the collection of mined callbacks and callbackProvider.js script to return callbacks for requested method
 
 
-
 ## Test Generation
 
 Invoked with the following command:
 
-`node testGeneration.js [INPUTS]`
+`npm run testgen`
+
+** where you, for now, update params manually in the `package.json` file
 
 Explanation of **INPUTS** (all required unless marked as OPTIONAL):
 
@@ -32,9 +34,7 @@ Explanation of **INPUTS** (all required unless marked as OPTIONAL):
 | setup code | 2 |  file containing setup code. To test array methods use setupCode/setupArray.js and to test promise methods use setupCode/setupPromise.js | string |
 | is feedback directed? | 3 | indicates whether callback position inference and the feedback are part of test generation | boolean number: (0 – no, 1 – yes) to generate tests with Base approach choose 0. | 
 | callback type | 4 | (see below) | number |
-|run with dynamic analysis? | 5 | indicates whether the dynamic analysis of memory reads is used during test generation | boolean number |
-| test folder | 6 | a path to a folder to put generated tests in | string |
-| polyfills to analyze (OPTIONAL) | 7 | hould be specified only if the test generator uses dynamic analysis for callback generation. Specifies paths to polyfills that are dynamically analyzed. | string |
+| test folder | 5 | a path to a folder to put generated tests in | string |
 
 ### Possible callback types: 
     0 - empty callback (Cb-Empty approach)

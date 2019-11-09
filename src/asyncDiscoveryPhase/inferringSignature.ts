@@ -122,7 +122,7 @@ function constructString(setupCode, apiName, baseObj, position) {
 // writes to to the "testposition.js" file, synchronously executes this
 // file, and then returns true/false indicating if the test executed
 // with feedback that the callback was executed
-function execute(str) {
+function execute(str: string) {
   try {
     let feedback = 'none';
     fs.writeFileSync('./testPosition.js', str);
@@ -139,7 +139,7 @@ function execute(str) {
     }
 
     return feedback;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -149,9 +149,7 @@ export function findPositions(setupCode, M) {
   const C = [];
 
   // for each m ∈ M do
-  for (let i = 0; i < M.length; i++) {
-    const m = M[i];
-
+  for (const m of M) {
     // empty set of callbacks
     const p = { name: m, positions: {} };
     // assume, by default 5 arguments
@@ -194,6 +192,5 @@ export function findPositions(setupCode, M) {
     maxTests = 100;
   }
 
-  // return C
   return C;
 }
