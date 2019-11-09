@@ -14,4 +14,12 @@ export class Sequence {
     public getMethods() {
         return this.methods;
     }
+
+    public clone(): Sequence {
+        const sequence = new Sequence();
+        for (const method of this.methods) {
+            sequence.append(method);
+        }
+        return sequence;
+    }
 }

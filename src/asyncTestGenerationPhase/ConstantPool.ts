@@ -12,6 +12,10 @@ export class ConstantPool {
         return varName;
     }
 
+    public getPoolValueByKey(key: string) {
+        return this.pool[key];
+    }
+
     public getConstantVarNamesArray() {
         return Object.keys(this.pool);
     }

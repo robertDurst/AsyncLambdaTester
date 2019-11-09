@@ -1,9 +1,17 @@
 import { Error } from './Error';
 
 export class Feedback {
-  public error: Error;
+  private error: Error;
 
   constructor() {
-    // do something
+    this.error = null;
+  }
+
+  public isExtensible() {
+    return this.error == null;
+  }
+
+  public setError(value: string) {
+    this.error = value;
   }
 }
