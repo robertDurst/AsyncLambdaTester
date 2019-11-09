@@ -49,7 +49,6 @@ export class Method {
     public getStatements(newBase: string, functionPool) {
         const statements = [];
 
-        // NO IDEA WHAT NEWBASE SHOULD BE HERE :(
         statements.push(`var ${this.baseVar} = ${newBase};`);
         statements.push(`var ${this.retVar} = undefined;`);
         statements.push(this.generateCallString(functionPool));

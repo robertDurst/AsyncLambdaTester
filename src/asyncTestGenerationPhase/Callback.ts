@@ -1,9 +1,7 @@
 import * as fc from 'fast-check';
-import { getCallbacks } from '../callbackMining/callbackProvider';
 import { typeOf } from '../utilities/dirUtility';
 import { pickRandomEl } from '../utilities/testUtilities'
 import { CallbackStrategy } from './CallbackStrategy';
-import { Feedback } from './Feedback';
 
 export class Callback {
     private statements: string[];

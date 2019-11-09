@@ -1,33 +1,5 @@
-/**
- * -2. initialize worklist
- * -1. initialize baseArr and retArr
- *
- * WHILE WORK TEST BUDGET:
- *  0. initialize pool, fnPool, testName, testJSON
- *  1. select a sequence
- *  2. select a method
- *  3. if no bases in pool, add a random one
- *  4. define base/ret vars and add to base/ret arr
- *  5. generate args and callback
- * 5.5. generate a method object
- *  6. create test w/ statements and call object
- *  7. generate raw testcode string and write to a file
- *  8. execute test, get feedback and save stuff
- *  9. check if extensible
- *  10. increment test index (used for test naming)
- *
- * return test results
- */
-
-/**
- * Classes to define:
- * - Test: sequence and file
- * - Sequence: list of statements
- * - Call: method name, return variable, base variable, arguments
- */
 import { execSync } from 'child_process';
 import * as fs from 'fs';
-import { Decisions } from '../utilities/randomGenerator';
 import {
     extendPool,
     getElFromMap,
@@ -35,7 +7,6 @@ import {
     pickRandomEl,
 } from '../utilities/testUtilities';
 import { Callback } from './Callback';
-import { CallbackStrategy } from './CallbackStrategy';
 import { ConstantPool } from './ConstantPool';
 import { Feedback } from './Feedback';
 import { Method } from './Method';
