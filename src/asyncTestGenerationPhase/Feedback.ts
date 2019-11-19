@@ -1,4 +1,4 @@
-import { Error } from './Error';
+import { Error, ErrorType } from './Error';
 
 export class Feedback {
   private error: Error;
@@ -11,7 +11,11 @@ export class Feedback {
     return this.error == null;
   }
 
-  public setError(value: string) {
-    this.error = value;
+  public setError(value: string, isTimeout: boolean) {
+    this.error = new Error(isTimeout ? ErrorType.Timeout : ErrorType.Normal, value);
+  }
+
+  public getError() {
+    return this.error;
   }
 }
