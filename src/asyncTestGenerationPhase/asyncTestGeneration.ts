@@ -29,6 +29,7 @@ const generateArguments = (
     functionPool: any[],
     positionData,
     typeOfCallback: number,
+    argumentOffset: number,
 ) => {
     const args = [];
     let callback = null;
@@ -43,12 +44,11 @@ const generateArguments = (
         Number(decisions.pickRandomNbOfArgs(callbackPosition))
         : Number(decisions.pickRandomNbOfArgs(0));
 
-    for (let i = 0; i < n; i++) {
+    for (let i = argumentOffset; i < argumentOffset + n; i++) {
         // generate unique names for args
         const name = `argument${i}`;
 
-        // argn ← createCallback();
-        if (i === Number(callbackPosition)) {
+        if (i - argumentOffset === Number(callbackPosition) - 1) {
             callback = new Callback(typeOfCallback);
             break;
         }
@@ -71,6 +71,8 @@ const generateArguments = (
     return {
         args,
         callback,
+        constantPoolCopy: constantPool,
+        numberOfArguments: n,
     };
 };
 
@@ -79,9 +81,9 @@ const executeAndGetFeedback = (testFileName: string): Feedback => {
     const feedback = new Feedback();
 
     try {
-        execSync(`timeout 5 node ${testFileName}`).toString();
+        execSync(`timeout -s 9 -v 5 node ${testFileName}`).toString();
     } catch (e) {
-        feedback.setError(e.message);
+        feedback.setError(e.message, e.message.includes('timeout: sending signal KILL'));
     }
 
     return feedback;
@@ -108,6 +110,9 @@ export const testGenerationPhase = (
     const baseArr = [];
     const retArr = [];
 
+    let argumentOffset = 0;
+    let constantPool = new ConstantPool();
+
     // WHILE WORK TEST BUDGET
     let testIndex = 0;
     while (testBudget > testIndex) {
@@ -115,7 +120,6 @@ export const testGenerationPhase = (
 
         const fnPool = extendPool(JSON.parse(JSON.stringify(setupValues)), decisions);
         const pool = setupValues.length > 0 ? JSON.parse(JSON.stringify(setupValues)) : [];
-        const constantPool = new ConstantPool();
         const testName = `./${testFolderPath}/test${testIndex}.js`;
 
         // 1. select a sequence
@@ -136,7 +140,7 @@ export const testGenerationPhase = (
         retArr.push(retVar);
 
         // 5. generate args and callback
-        const { args, callback } = generateArguments(
+        const { args, callback, constantPoolCopy, numberOfArguments } = generateArguments(
             currentMethodName,
             constantPool,
             decisions,
@@ -144,7 +148,12 @@ export const testGenerationPhase = (
             fnPool,
             positionData,
             typeOfCallback,
+            argumentOffset,
         );
+
+        constantPool = constantPoolCopy;
+
+        argumentOffset += numberOfArguments;
 
         // 5.5 generate a method object and get sequence prime!
         const method = new Method(args, baseVar, callback, testIndex, currentMethodName, retVar);
@@ -172,6 +181,9 @@ export const testGenerationPhase = (
         // TODO: if it is not extensible, what should I do?
         if (feedback.isExtensible()) {
             workList.push(currentSequence);
+        } else {
+            // console.log('Non-extensible:');
+            // console.log(feedback.getError());
         }
 
         // 10. increment test index

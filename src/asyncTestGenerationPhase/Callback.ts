@@ -8,7 +8,7 @@ export class Callback {
     private strategy: CallbackStrategy;
 
     constructor(strategy: CallbackStrategy) {
-        this.statements = ['callbackArguments.push(arguments)'];
+        this.statements = ['callbackArguments.push(arguments);', 'callbackData.push(data);'];
         this.strategy = strategy;
     }
 
@@ -78,7 +78,7 @@ export class Callback {
         switch (this.strategy) {
             case CallbackStrategy.EmptyCallback: {
                 // preface
-                let result = 'function callback() {\n';
+                let result = 'function callback(err, data) {\n';
 
                 // generate and append string for all the statements
                 for (const statement of this.statements) {
