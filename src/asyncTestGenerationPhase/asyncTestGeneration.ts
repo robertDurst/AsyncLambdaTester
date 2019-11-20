@@ -72,6 +72,7 @@ const generateArguments = (
     return {
         args,
         callback,
+        constantPoolCopy: constantPool,
         numberOfArguments: n,
     };
 };
@@ -111,6 +112,7 @@ export const testGenerationPhase = (
     const retArr = [];
 
     let argumentOffset = 0;
+    let constantPool = new ConstantPool();
 
     // WHILE WORK TEST BUDGET
     let testIndex = 0;
@@ -119,7 +121,6 @@ export const testGenerationPhase = (
 
         const fnPool = extendPool(JSON.parse(JSON.stringify(setupValues)), decisions);
         const pool = setupValues.length > 0 ? JSON.parse(JSON.stringify(setupValues)) : [];
-        const constantPool = new ConstantPool();
         const testName = `./${testFolderPath}/test${testIndex}.js`;
 
         // 1. select a sequence
@@ -140,7 +141,7 @@ export const testGenerationPhase = (
         retArr.push(retVar);
 
         // 5. generate args and callback
-        const { args, callback, numberOfArguments } = generateArguments(
+        const { args, callback, constantPoolCopy, numberOfArguments } = generateArguments(
             currentMethodName,
             constantPool,
             decisions,
@@ -150,6 +151,8 @@ export const testGenerationPhase = (
             typeOfCallback,
             argumentOffset,
         );
+
+        constantPool = constantPoolCopy;
 
         argumentOffset += numberOfArguments;
 
@@ -180,8 +183,8 @@ export const testGenerationPhase = (
         if (feedback.isExtensible()) {
             workList.push(currentSequence);
         } else {
-            console.log('Non-extensible:');
-            console.log(feedback.getError());
+            // console.log('Non-extensible:');
+            // console.log(feedback.getError());
         }
 
         // 10. increment test index
