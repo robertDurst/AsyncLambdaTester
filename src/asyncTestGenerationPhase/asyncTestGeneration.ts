@@ -44,12 +44,11 @@ const generateArguments = (
         Number(decisions.pickRandomNbOfArgs(callbackPosition))
         : Number(decisions.pickRandomNbOfArgs(0));
 
-    for (let i = argumentOffset; i < argumentOffset + n + 1; i++) {
+    for (let i = argumentOffset; i < argumentOffset + n; i++) {
         // generate unique names for args
         const name = `argument${i}`;
 
-        // argn ← createCallback();
-        if (i - argumentOffset === Number(callbackPosition)) {
+        if (i - argumentOffset === Number(callbackPosition) - 1) {
             callback = new Callback(typeOfCallback);
             break;
         }

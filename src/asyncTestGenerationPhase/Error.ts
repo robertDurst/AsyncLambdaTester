@@ -15,4 +15,8 @@ export class Error {
     public getErrorType() {
         return this.errorType;
     }
+
+    public getErrorRaw() {
+        return this.errorRaw;
+    }
 }
