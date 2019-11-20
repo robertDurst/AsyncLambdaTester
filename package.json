@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf ./src/asyncTestGenerationPhase/*.js ./test* ./src/asyncDiscoveryPhase/*.js ./reduceTests ./src/generateTests.js",
     "compile": "tsc ./src/asyncTestGenerationPhase/*.ts ./src/asyncDiscoveryPhase/*.ts ./src/generateTests.ts",
-    "exec": "node ./src/generateTests.js 'readFile' 10 ./setupCode/setupFs.js 0 0 reduceTests",
+    "exec": "node ./src/generateTests.js 'fstat readFile' 5 ./setupCode/setupFs.js 0 0 reduceTests",
     "lint": "eslint",
     "testgen": "npm run clean && npm run compile && npm run exec"
   },
@@ -15,6 +15,7 @@
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
     "fast-check": "^1.18.1",
+    "random": "^2.1.1",
     "seedrandom": "^2.4.3",
     "typescript": "^3.6"
   },

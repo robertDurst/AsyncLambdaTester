@@ -1,6 +1,7 @@
 const esprima = require('esprima');
 const estraverse = require('estraverse');
 const { execSync } = require('child_process');
+const random = require('random');
 
 // extendPool takes in a pool and a collection of decisions, or
 // possible types, pick a random constant for the given type if
@@ -18,8 +19,12 @@ const extendPool = (pool, decisions) => {
   return pool;
 };
 
+function getRandomInt(max) {
+  return random.int(0, max < 0 ? 0 : max);
+}
+
 // get random element from an array
-const pickRandomEl = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const pickRandomEl = (arr) => arr[getRandomInt(arr.length - 1)];
 
 // attempt to return an element from positions with the given fnName, if
 // not found, return an empty array

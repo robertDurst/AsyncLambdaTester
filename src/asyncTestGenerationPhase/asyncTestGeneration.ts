@@ -44,7 +44,7 @@ const generateArguments = (
         Number(decisions.pickRandomNbOfArgs(callbackPosition))
         : Number(decisions.pickRandomNbOfArgs(0));
 
-    for (let i = argumentOffset + 1; i < argumentOffset + n; i++) {
+    for (let i = argumentOffset; i < argumentOffset + n + 1; i++) {
         // generate unique names for args
         const name = `argument${i}`;
 
