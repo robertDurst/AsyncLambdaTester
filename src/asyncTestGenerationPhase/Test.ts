@@ -22,6 +22,7 @@ export class Test {
         // to the top
         let result = `${setupCode}\n`;
         result += 'var callbackArguments = [];\n';
+        result += 'var callbackData = [];\n';
 
         // --------- generate all the constant vars in the constant pool --------
         for (const constantVar of constantPool.getConstantVarNamesArray()) {
@@ -54,7 +55,7 @@ export class Test {
         // clone here to make this pure
         const methods = this.sequence.getMethods().map((method) => method.clone());
         // innermost executes done
-        methods[0].injectMethod(['done();']);
+        // methods[0].injectMethod(['done();']);
         // calculate newBase
         const decisions = new Decisions();
         let newBase = pool.length > 0 ?
