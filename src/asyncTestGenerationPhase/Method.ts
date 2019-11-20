@@ -49,8 +49,7 @@ export class Method {
     public getStatements(newBase: string, functionPool) {
         const statements = [];
 
-        statements.push(`var ${this.baseVar} = ${newBase};`);
-        statements.push(`var ${this.retVar} = undefined;`);
+        statements.push(`let ${this.baseVar} = ${newBase};\n`);
         statements.push(this.generateCallString(functionPool));
 
         return statements;
@@ -69,7 +68,10 @@ export class Method {
     }
 
     public clone() {
-        return new Method(this.args, this.baseVar, this.callback.clone(), this.id, this.name, this.retVar);
+        if (this.callback) {
+            return new Method(this.args, this.baseVar, this.callback.clone(), this.id, this.name, this.retVar);
+        }
+        return new Method(this.args, this.baseVar, this.callback, this.id, this.name, this.retVar);
     }
 
     private generateCallString(functionPool) {
@@ -77,6 +79,6 @@ export class Method {
             this.baseVar = JSON.stringify(this.baseVar);
         }
 
-        return `${this.retVar} = ${this.baseVar}.${this.name}(${this.args.slice(0, this.args.length)}, ${this.callback ? this.callback.generateCode(functionPool) : ''})`;
+        return `let ${this.retVar} = ${this.baseVar}.${this.name}(${this.args.slice(0, this.args.length)}, ${this.callback ? this.callback.generateCode(functionPool) : ''})`;
     }
 }
